@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.de-panther.webxr": "file:../LocalPackages/com.de-panther.webxr-0.25.0.tgz",
     "com.de-panther.webxr-interactions": "file:../LocalPackages/com.de-panther.webxr-interactions-0.25.0.tgz",
     "com.unity.ai.navigation": "2.0.14",
     "com.unity.collab-proxy": "2.13.6",

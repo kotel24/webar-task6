@@ -1264,7 +1264,11 @@ void main()
 }, 0);
 
 Module['WebXR'].GetBrowserObject = function () {
-  return Browser;
+  if (typeof Browser !== 'undefined' && Browser.mainLoop) {
+    return Browser;
+  }
+  MainLoop.mainLoop = MainLoop;
+  return MainLoop;
 }
 
 Module['WebXR'].GetJSEventsObject = function () {
