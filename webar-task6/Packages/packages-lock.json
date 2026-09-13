@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.de-panther.webxr": {
-      "version": "file:../LocalPackages/com.de-panther.webxr-0.25.0.tgz",
+      "version": "file:com.de-panther.webxr",
       "depth": 0,
-      "source": "local-tarball",
+      "source": "embedded",
       "dependencies": {
         "com.unity.xr.management": "3.2.13"
       }
