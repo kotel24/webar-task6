@@ -1,0 +1,8 @@
+{
+    "name": "Scripts",
+    "references": [
+        "WebXR",
+        "Unity.XR.Management"
+    ],
+    "autoReferenced": true
+}
