@@ -25,9 +25,34 @@
         <button id="entervr" value="Enter VR" disabled>VR</button>
         <button id="enterar" value="Enter AR" disabled>AR</button>
         <div id="unity-webxr-link">Using <a href="https://github.com/De-Panther/unity-webxr-export" target="_blank" title="WebXR Export">WebXR Export</a></div>
-        <div id="unity-build-title">webar-task6</div>
+        <div id="unity-build-title">webar-task6 v3</div>
       </div>
     </div>
+    <div id="debug-log" style="position: fixed; top: 0; left: 0; right: 0; max-height: 50%; overflow: auto; background: rgba(0, 0, 0, 0.85); color: #ff8080; font: 12px monospace; white-space: pre-wrap; z-index: 10; display: none;"></div>
+    <script>
+      var createElementOriginal = document.createElement.bind(document);
+      document.createElement = function (tagName, options) {
+        var element = createElementOriginal(tagName, options);
+        if (String(tagName).toLowerCase() === "script") {
+          element.crossOrigin = "anonymous";
+        }
+        return element;
+      };
+
+      function showDebug(text) {
+        var log = document.getElementById("debug-log");
+        log.style.display = "block";
+        log.textContent += text + "\n\n";
+      }
+
+      window.addEventListener("error", function (event) {
+        var stack = event.error && event.error.stack ? event.error.stack : event.filename + ":" + event.lineno;
+        showDebug((event.message || "error") + "\n" + stack);
+      });
+      window.addEventListener("unhandledrejection", function (event) {
+        showDebug("unhandledrejection: " + (event.reason && event.reason.stack ? event.reason.stack : event.reason));
+      });
+    </script>
     <script>
       var buildUrl = "https://rawcdn.githack.com/kotel24/webar-task6/6d4eb808a94d554ab1f9f5a9a4b12a1b8cbf739a/Build";
       var loaderUrl = buildUrl + "/webar-task6.loader.js";
