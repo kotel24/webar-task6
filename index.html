@@ -25,7 +25,7 @@
         <button id="entervr" value="Enter VR" disabled>VR</button>
         <button id="enterar" value="Enter AR" disabled>AR</button>
         <div id="unity-webxr-link">Using <a href="https://github.com/De-Panther/unity-webxr-export" target="_blank" title="WebXR Export">WebXR Export</a></div>
-        <div id="unity-build-title">webar-task6 v3</div>
+        <div id="unity-build-title">webar-task6 v4</div>
       </div>
     </div>
     <div id="debug-log" style="position: fixed; top: 0; left: 0; right: 0; max-height: 50%; overflow: auto; background: rgba(0, 0, 0, 0.85); color: #ff8080; font: 12px monospace; white-space: pre-wrap; z-index: 10; display: none;"></div>
@@ -45,21 +45,34 @@
         log.textContent += text + "\n\n";
       }
 
+      var consoleLines = [];
+      ["log", "warn", "error"].forEach(function (level) {
+        var original = console[level].bind(console);
+        console[level] = function () {
+          var text = Array.prototype.slice.call(arguments).join(" ");
+          consoleLines.push(level + ": " + text.slice(0, 300));
+          if (consoleLines.length > 15) {
+            consoleLines.shift();
+          }
+          original.apply(null, arguments);
+        };
+      });
+
       window.addEventListener("error", function (event) {
-        var stack = event.error && event.error.stack ? event.error.stack : event.filename + ":" + event.lineno;
-        showDebug((event.message || "error") + "\n" + stack);
+        var stack = event.error && event.error.stack ? event.error.stack : event.filename + ":" + event.lineno + ":" + event.colno;
+        showDebug((event.message || "error") + "\n" + stack + "\n\n" + navigator.userAgent + "\n\n" + consoleLines.join("\n"));
       });
       window.addEventListener("unhandledrejection", function (event) {
         showDebug("unhandledrejection: " + (event.reason && event.reason.stack ? event.reason.stack : event.reason));
       });
     </script>
     <script>
-      var buildUrl = "https://rawcdn.githack.com/kotel24/webar-task6/6d4eb808a94d554ab1f9f5a9a4b12a1b8cbf739a/Build";
-      var loaderUrl = buildUrl + "/webar-task6.loader.js";
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/webar-task6.loader.js?v=4";
       var config = {
         dataUrl: "https://cdn.jsdelivr.net/gh/kotel24/webar-task6@6d4eb808a94d554ab1f9f5a9a4b12a1b8cbf739a/Build/webar-task6.data",
-        frameworkUrl: buildUrl + "/webar-task6.framework.js",
-        codeUrl: buildUrl + "/webar-task6.wasm",
+        frameworkUrl: buildUrl + "/webar-task6.framework.js?v=4",
+        codeUrl: "https://rawcdn.githack.com/kotel24/webar-task6/6d4eb808a94d554ab1f9f5a9a4b12a1b8cbf739a/Build/webar-task6.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "webar-task6",
