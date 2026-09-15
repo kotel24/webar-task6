@@ -1098,6 +1098,9 @@ void main()
           this.ctx.clear(this.ctx.COLOR_BUFFER_BIT | this.ctx.DEPTH_BUFFER_BIT);
         }
         
+        if (!session.refSpace) {
+          return this.didNotifyUnity;
+        }
         var pose = frame.getViewerPose(session.refSpace);
         if (!pose) {
           return this.didNotifyUnity;
